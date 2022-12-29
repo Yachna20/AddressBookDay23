@@ -26,7 +26,7 @@
             {
                 Console.WriteLine("Working On {0} AddressBook", BookName);
                 Console.WriteLine("choice an option \n 1.AddContact\n2.Edit Contact\n3.DeleteContact\n4.ViewContact\n" +
-                    "5.View All COntact\n6.Add New AddressBook\n7.Swich addressBook\n8.Exit Application");
+                    "5.View All Contact\n6.Add New AddressBook\n7.Switch addressBook\n8.Exit Application");
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -35,6 +35,11 @@
                         string FirstName = Console.ReadLine();
                         Console.WriteLine("Enter LastName");
                         string LastName = Console.ReadLine();
+                        Contact contact = new Contact(FirstName, LastName, null, null, null, null, 0, 0);
+                        if (ad.CheckDuplicateEntry(contact, BookName))
+                        {
+                            break;
+                        }
                         Console.WriteLine("Enter Address");
                         string Address = Console.ReadLine();
                         Console.WriteLine("Enter City");
@@ -78,6 +83,25 @@
                         if (c == 1)
                         {
                             BookName = newaddressbook;
+                        }
+                        break;
+                    case 7:
+                        Console.WriteLine("Enter Name Of AddressBook From Below List");
+                        foreach (KeyValuePair<string, AddressBook> item in ad.GetaddressBook())
+                        {
+                            Console.WriteLine(item.Key);
+                        }
+                        while (true)
+                        {
+                            BookName = Console.ReadLine();
+                            if (ad.GetaddressBook().ContainsKey(BookName))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("No such AddressBook found. Try Again.");
+                            }
                         }
                         break;
                 }
